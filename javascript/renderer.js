@@ -23,22 +23,50 @@ $(document).keydown(function (e) {
       $current.prev().focus();
       break;
     case 38:
-      $current.parent().prev().prev().children().first().focus();
+      jFocus(e, $current.parent().prev().prev().children().first());
       break;
     case 39:
       $current.next().focus();
       break;
     case 40:
-      $current.parent().next().next().children().first().focus();
+      jFocus(e, $current.parent().next().next().children().first());
       break;
     default:
       break;
   }
-  // var index = $(":focus").index() + 1;
-  // console.log(index);
-  // if (e.which === 37) {
-  //   $('div :nth-child(' + (index - 1) + ')').focus();
-  // } else if (e.which === 39) {
-  //   $('div :nth-child(' + (index + 1) + ')').focus();
-  // }
 });
+
+var cursorFocus = function (elem) {
+  var x = window.scrollX,
+    y = window.scrollY;
+  elem.focus();
+  window.scrollTo(x, y);
+}
+
+var anim = null;
+
+var jFocus = function (e, $target) {
+  if(!$target.parent().prev().offset()) {
+    return;
+  }
+  e.preventDefault();
+  if (anim === null) {
+    anim = $('html, body').animate({
+      scrollTop: $target.parent().prev().offset().top
+    }, 160,  "swing", function () {
+      anim = null;
+      // Callback after animation
+      // Must change focus!
+      $target.focus();
+      if ($target.is(":focus")) { // Checking if the target was focused
+        return false;
+      } else {
+        console.warn("it should'n happen")
+        $target.attr('tabindex', '-1'); // Adding tabindex for elements not focusable
+        $target.focus(); // Set focus again
+      };
+    });
+  } else {
+    window.scrollTo(0, $target.parent().prev().offset().top);
+  }
+}
