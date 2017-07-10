@@ -7,8 +7,8 @@ var render = (index) => document.write(
 )
 var renderList = (index) => {
   document.write('<h4>PC</h4><div class="list">')
-  for (var i = 0; i < 10; i++) {
-    render((index * 10) + i);
+  for (var i = 0; i < 20; i++) {
+    render((index * 20) + i);
   }
   document.write('</div>')
 }
@@ -18,10 +18,21 @@ for (var i = 0; i < 10; i++) {
 
 $(document).keydown(function (e) {
   var $current = $(":focus");
-  if (e.which === 37) {
-    $current.prev().focus();
-  } else if (e.which === 39) {
-    $current.next().focus();
+  switch (e.which) {
+    case 37:
+      $current.prev().focus();
+      break;
+    case 38:
+      $current.parent().prev().prev().children().first().focus();
+      break;
+    case 39:
+      $current.next().focus();
+      break;
+    case 40:
+      $current.parent().next().next().children().first().focus();
+      break;
+    default:
+      break;
   }
   // var index = $(":focus").index() + 1;
   // console.log(index);
