@@ -54,14 +54,13 @@ var jFocus = function (e, $target, direction) {
   e.preventDefault();
   if (!anim) {
     var top = 0;
-    var shouldScroll = false;
+    let shouldScroll = ($(window).height() + window.scrollY) < ($target.outerHeight() + $target.offset().top)
+      || $target.offset().top < window.scrollY;
     if (direction == ScrollDirection.DOWN) {
       top = Math.floor(($target.outerHeight() + $target.offset().top) - $(window).height()) +
-        VISIBILITY_MARGIN
-      shouldScroll = ($(window).height() + window.scrollY) < ($target.outerHeight() + $target.offset().top)
+        VISIBILITY_MARGIN;
     } else {
-      top = $target.offset().top - VISIBILITY_MARGIN
-      shouldScroll = $target.offset().top < window.scrollY
+      top = $target.offset().top - VISIBILITY_MARGIN;
     }
     if (shouldScroll) {
       anim = $('html, body').animate({
