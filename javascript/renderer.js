@@ -65,7 +65,7 @@ var jFocus = function (e, $target, direction) {
     if (shouldScroll) {
       anim = $('html, body').animate({
         scrollTop: top
-      }, 160, "swing", function () {
+      }, 200, "swing", function () {
         anim = null;
         return eFocus($target)
       });
@@ -81,9 +81,5 @@ var eFocus = ($target) => {
   $target.focus();
   if ($target.is(":focus")) { // Checking if the target was focused
     return false;
-  } else {
-    console.warn("it should'n happen")
-    $target.attr('tabindex', '-1'); // Adding tabindex for elements not focusable
-    $target.focus(); // Set focus again
-  };
+  }
 }
