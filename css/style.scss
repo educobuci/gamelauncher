@@ -6,6 +6,11 @@
 
 .item {
   padding:10px;
+  &:focus {
+    padding: 6px;
+    border: solid 4px black;
+    outline: none;
+  }  
 }
 
 ::-webkit-scrollbar { 
